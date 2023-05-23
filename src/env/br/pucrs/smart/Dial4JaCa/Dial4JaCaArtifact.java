@@ -69,6 +69,11 @@ public class Dial4JaCaArtifact extends Artifact implements IAgent {
 	    outputContext.set(context);
 	}
 
+	@OPERATION
+	void imprime(String text) {
+		System.out.println(text);
+	}
+
 	@Override
 	public ResponseRasa RasaIntentionProcessing(String intentName, HashMap<String, Object> parameters, String session) {
 		this.session = session;

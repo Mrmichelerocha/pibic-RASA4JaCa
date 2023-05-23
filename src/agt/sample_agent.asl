@@ -35,15 +35,14 @@
 	.concat("Você informou que a ",X," está estressada.",B);
 	+informou_stress(Name,X);
 	.findall(N,informou_stress(_,N),L);
-	.concat("Lista que a ",Name," informou ",L,A);
+	//imprime("Lista que a ",Name," informou ",L);
 	reply(B);
-	reply(A);
 	.
 
 +!responder(RequestedBy, ResponseId, IntentName, Params, Contexts)
 	: (IntentName == "inform_self_stress") & user(Name)
 <-
-	+stressed(Name);	
+	+stressed(Name);
 	reply("Você informou que está estressada.");
 	.
 
