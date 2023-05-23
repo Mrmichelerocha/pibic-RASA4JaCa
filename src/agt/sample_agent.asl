@@ -1,3 +1,4 @@
+//user("Maria").
 !start.
 
 /* 
@@ -26,7 +27,26 @@
 	!printParameters(Params);
 	reply("Hello, I'm your Jason agent, I received your contexts and parameters");
 	.
-	
+
++!responder(RequestedBy, ResponseId, IntentName, Params, Contexts)
+	: (IntentName == "inform_stress_other") & user(Name)
+<-
+	.nth(1,Params,param("name",X));
+	.concat("Você informou que a ",X," está estressada.",B);
+	+informou_stress(Name,X);
+	.findall(N,informou_stress(_,N),L);
+	.concat("Lista que a ",Name," informou ",L,A);
+	reply(B);
+	reply(A);
+	.
+
++!responder(RequestedBy, ResponseId, IntentName, Params, Contexts)
+	: (IntentName == "inform_self_stress") & user(Name)
+<-
+	+stressed(Name);	
+	reply("Você informou que está estressada.");
+	.
+
 +!responder(RequestedBy, ResponseId, IntentName, Params, Contexts)
 	: true
 <-
@@ -44,7 +64,7 @@
 +!printParameters([Param|List])
 <-
 	.print(Param)
-	!printParameters(List)
+	!printParameters(List);
 	.
 	
 +!hello

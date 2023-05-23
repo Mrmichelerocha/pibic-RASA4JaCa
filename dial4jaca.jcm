@@ -17,6 +17,7 @@ mas dial4jaca {
     agent sample_agent:sample_agent.asl{
     	focus: dial4JaCa
     	goals: hello
+        beliefs: user("Maria")
     }
     
 	workspace wp{
