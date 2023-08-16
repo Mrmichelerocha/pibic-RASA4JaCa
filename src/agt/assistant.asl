@@ -8,21 +8,31 @@
 	.
 
 +!responder(RequestedBy, ResponseId, IntentName, Params, Contexts)
-	: (IntentName == "inform_stress_other") & user(Name)
+	: (IntentName == "inform_stress_other") & .my_name(Name)
 <-
 	.nth(1,Params,param("name",X));
 	.concat("Você informou que a ",X," está estressada.",B);
-	+informou_stress(Name,X);
-	.findall(N,informou_stress(_,N),L);
-	.print("Lista que a ", Name ," informou ", L);
-	reply(B);
+	.lower_case(X,A);
+	.send(A,tell,believe(Name,stressed(A)));
+	.
+
++believe(Name,stressed(A))
+	:  .count(believe(_,~stressed(A)),N1) & .count(believe(_,stressed(A)),N2) & N2 > N1
+<-	
+	.print(A);
+	.print(N1);
+	.print(N2);
+//	.count(believe(_,~stressed(A)),N1)
+//	.count(believe(_,stressed(A)),N2)
+//	.concat(Name," informou que ",A,"está estressado",C)
+//	reply("Pode ser que você esteja estressado(a)");
 	.
 
 +!responder(RequestedBy, ResponseId, IntentName, Params, Contexts)
-	: (IntentName == "inform_self_stress") & user(Name)
+	: (IntentName == "inform_self_stress") & .my_name(A)
 <-
-	+stressed(Name);
-	.print("Informou self stress!")
+	+believe(A,stressed(A));
+	.print("Informou self stress!");
 	reply("Você informou que está estressada.");
 	.
 
