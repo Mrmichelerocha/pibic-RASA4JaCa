@@ -69,21 +69,12 @@ public class RestImpl extends AbstractBinder {
 	public Response receiveRequestRasa(String request) {
 		try {
 			RequestRasa requestRasa = gson.fromJson(request, RequestRasa.class);
-			System.out.println("[Rasa4JaCa] Agent communicated: " +  gson.toJson(requestRasa, RequestRasa.class));
 
 			if (mas != null) {
-				System.out.println(gson.toJson(requestRasa.getTracker(), Tracker.class));
-				System.out.println(gson.toJson(requestRasa.getTracker().getSlots()));
-				System.out.println(gson.toJson(requestRasa.getTracker().getSlots().get("intentName").toString()));
-
-
-				System.out.println(requestRasa.getTracker().getSlots().get("intentName").toString());
-				System.out.println(requestRasa.getTracker().getSlots().toString());
-				System.out.println(requestRasa.getSenderID());
 
         		ResponseRasa responseRasa = mas.RasaIntentionProcessing(requestRasa.getTracker().getSlots().get("intentName").toString(),
 																				requestRasa.getTracker().getSlots(),
-																				requestRasa.getSenderID());
+																				requestRasa.getTracker().getSenderID().toString());
         		return Response.ok(gson.toJson(responseRasa)).build();
         	} else {
 				ResponseRasa responseRasa = new ResponseRasa();

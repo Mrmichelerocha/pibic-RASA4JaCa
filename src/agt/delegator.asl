@@ -3,14 +3,14 @@
 +request(RequestedBy, ResponseId, IntentName, Params, Contexts)
 	: not(alocated_assistant(_,ResponseId)) & users(L) & .nth(0,L,User)
 <-
-	 .delete(User,L,NewL);
+	.delete(User,L,NewL);
 	+alocated_assistant(User,ResponseId);
 	-+users(NewL)[source(_)];
 	.print(" == >> Criar assistente para [", ResponseId, "] nomeado ", User);
 	.create_agent(User,"assistant.asl"); // criação
 	.send(User,tell,user(ResponseId)); //delegação do usuário
-	.concat("Criando um assistente para você ", User, Msg);
-	.print(NewL)
+	.concat("Criando um assistente para voce ", User, Msg);
+	.print(NewL);
 	reply(Msg).
 
 //+request(RequestedBy, ResponseId, IntentName, Params, Contexts): alocated_assistant(User,ResponseId) 

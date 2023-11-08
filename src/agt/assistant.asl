@@ -14,6 +14,7 @@
 	.concat("Você informou que a ",X," está estressada.",B);
 	.lower_case(X,A);
 	.send(A,tell,believe(Name,stressed(A)));
+	reply(B);
 	.
 
 +believe(Name,stressed(A))
